@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order confirmed — Kosuke Beauty</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body class="checkout-page">
+  <header class="site-header">
+    <a href="/" class="logo">Kosuke<span>Beauty</span></a>
+  </header>
+  <main class="confirm panel" id="confirm">
+    <p class="muted">Loading your order…</p>
+  </main>
+  <script src="/js/common.js"></script>
+  <script>
+    (async function () {
+      const el = document.getElementById('confirm');
+      const id = new URLSearchParams(location.search).get('order');
+      const res = id ? await fetch('/api/orders/' + encodeURIComponent(id)) : null;
+      if (!res || !res.ok) {
+        el.innerHTML = '<h1>Order not found</h1><p><a href="/" class="btn btn-primary">Back to shop</a></p>';
+        return;
+      }
+      const o = await res.json();
+      Cart.clear();
+      const methodLabel = { card: 'Card', paypal: 'PayPal', upi: 'UPI', cod: 'Cash on delivery' }[o.payment.method];
+      const detail = o.payment.last4 ? `${escapeHtml(o.payment.brand)} •••• ${o.payment.last4}` : escapeHtml(o.payment.account || '');
+      const pricing = o.pricing;
+      el.innerHTML = `
+        <div class="confirm-icon">✓</div>
+        <h1>Thank you, ${escapeHtml(o.customer.name.split(' ')[0])}!</h1>
+        <p>Your order <strong>${o.id}</strong> is confirmed. A receipt is on its way to ${escapeHtml(o.customer.email)}.</p>
+        <div class="confirm-grid">
+          <div><h3>Shipping to</h3><p>${escapeHtml(o.customer.name)}<br>${escapeHtml(o.customer.address)}<br>${escapeHtml(o.customer.city)} ${escapeHtml(o.customer.zip)}<br>${escapeHtml(o.customer.country)}</p></div>
+          <div><h3>Payment</h3><p>${methodLabel} ${detail ? '· ' + detail : ''}<br><span class="status status-${o.payment.status === 'paid' ? 'paid' : 'due'}">${escapeHtml(o.payment.status)}</span></p></div>
+        </div>
+        <div class="totals">
+          ${pricing.lines.map((l) => `<div class="row"><span>${l.qty} × ${escapeHtml(l.name)} <span class="muted">(${escapeHtml(l.shade)})</span></span><span>${money(l.lineTotal)}</span></div>`).join('')}
+          ${pricing.discount ? `<div class="row discount"><span>Discount (${pricing.promoCode})</span><span>−${money(pricing.discount)}</span></div>` : ''}
+          <div class="row"><span>Shipping</span><span>${pricing.shipping ? money(pricing.shipping) : 'Free'}</span></div>
+          ${pricing.codFee ? `<div class="row"><span>COD fee</span><span>${money(pricing.codFee)}</span></div>` : ''}
+          <div class="row"><span>Tax</span><span>${money(pricing.tax)}</span></div>
+          <div class="row total"><span>Total</span><span>${money(pricing.total)}</span></div>
+        </div>
+        <a href="/" class="btn btn-primary">Continue shopping</a>`;
+    })();
+  </script>
+</body>
+</html>

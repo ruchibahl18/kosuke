@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kosuke Beauty — Makeup that loves you back</title>
+  <meta name="description" content="Shop cruelty-free lipsticks, eyeshadow, foundation, blush and brushes at Kosuke Beauty." />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <div class="promo-bar">Free standard shipping on orders over $50 · Use code <strong>GLOW10</strong> for 10% off</div>
+
+  <header class="site-header">
+    <a href="/" class="logo">Kosuke<span>Beauty</span></a>
+    <nav class="main-nav">
+      <a href="#shop">Shop</a>
+      <a href="#why">Why us</a>
+    </nav>
+    <button class="cart-btn" data-open-cart aria-label="Open shopping bag">
+      Bag <span class="badge" data-cart-count hidden>0</span>
+    </button>
+  </header>
+
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">New season · Sunset collection</p>
+      <h1>Makeup that<br /><em>loves you back.</em></h1>
+      <p>Cruelty-free, vegan formulas in shades made for every skin tone.</p>
+      <a href="#shop" class="btn btn-primary">Shop now</a>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <span class="swatch s1"></span><span class="swatch s2"></span><span class="swatch s3"></span><span class="swatch s4"></span>
+    </div>
+  </section>
+
+  <main id="shop" class="shop">
+    <div class="shop-toolbar">
+      <div class="filters" role="tablist" aria-label="Filter by category" id="filters"></div>
+      <div class="toolbar-right">
+        <input type="search" id="search" placeholder="Search makeup…" aria-label="Search products" />
+        <select id="sort" aria-label="Sort products">
+          <option value="featured">Featured</option>
+          <option value="price-asc">Price: low to high</option>
+          <option value="price-desc">Price: high to low</option>
+          <option value="rating">Top rated</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </main>
+
+  <section id="why" class="perks">
+    <div><h3>🐰 Cruelty-free</h3><p>Never tested on animals. Certified vegan formulas.</p></div>
+    <div><h3>🚚 Fast delivery</h3><p>Free over $50, or express in 1–2 days.</p></div>
+    <div><h3>🔒 Secure checkout</h3><p>Pay by card, PayPal, UPI or cash on delivery.</p></div>
+    <div><h3>↩️ Easy returns</h3><p>Not your shade? Return it within 30 days.</p></div>
+  </section>
+
+  <footer class="site-footer">
+    <p>© 2026 Kosuke Beauty. All rights reserved.</p>
+    <p class="pay-icons" aria-label="Accepted payment methods"><span>VISA</span><span>Mastercard</span><span>AMEX</span><span>PayPal</span><span>UPI</span><span>COD</span></p>
+  </footer>
+
+  <!-- Product quick view -->
+  <dialog id="quickview" class="quickview"></dialog>
+
+  <!-- Cart drawer -->
+  <div class="drawer-backdrop" data-close-cart></div>
+  <aside class="drawer" aria-label="Shopping bag">
+    <div class="drawer-head">
+      <h2>Your bag</h2>
+      <button class="icon-btn" data-close-cart aria-label="Close bag">×</button>
+    </div>
+    <div class="drawer-items" id="drawer-items"></div>
+    <div class="drawer-footer" id="drawer-footer" hidden>
+      <p class="ship-note" id="drawer-ship-note"></p>
+      <div class="row"><span>Subtotal</span><strong id="drawer-subtotal"></strong></div>
+      <a href="/checkout.html" class="btn btn-primary btn-block">Checkout</a>
+      <p class="muted small center">Taxes and shipping calculated at checkout</p>
+    </div>
+  </aside>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/shop.js"></script>
+</body>
+</html>

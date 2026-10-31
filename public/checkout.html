@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — Kosuke Beauty</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body class="checkout-page">
+  <header class="site-header">
+    <a href="/" class="logo">Kosuke<span>Beauty</span></a>
+    <span class="secure">🔒 Secure checkout</span>
+  </header>
+
+  <main class="checkout">
+    <form id="checkout-form" class="checkout-form" novalidate>
+      <div id="notice" class="notice" hidden></div>
+
+      <section class="panel">
+        <h2><span class="step">1</span> Contact &amp; shipping</h2>
+        <div class="fields">
+          <label class="full">Full name<input name="name" autocomplete="name" required /></label>
+          <label>Email<input name="email" type="email" autocomplete="email" required /></label>
+          <label>Phone<input name="phone" type="tel" autocomplete="tel" /></label>
+          <label class="full">Address<input name="address" autocomplete="street-address" required /></label>
+          <label>City<input name="city" autocomplete="address-level2" required /></label>
+          <label>ZIP / Postal code<input name="zip" autocomplete="postal-code" required /></label>
+          <label class="full">Country
+            <select name="country" autocomplete="country-name" required>
+              <option>United States</option><option>Canada</option><option>United Kingdom</option>
+              <option>India</option><option>Australia</option><option>Japan</option><option>Germany</option><option>France</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2><span class="step">2</span> Delivery</h2>
+        <div class="options" id="shipping-options">
+          <label class="option"><input type="radio" name="shipping" value="standard" checked />
+            <span><strong>Standard</strong><small>5–7 business days · free over $50</small></span><em id="ship-standard-price"></em></label>
+          <label class="option"><input type="radio" name="shipping" value="express" />
+            <span><strong>Express</strong><small>1–2 business days</small></span><em>$14.99</em></label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2><span class="step">3</span> Payment</h2>
+        <div class="options pay-options" id="payment-options">
+          <label class="option"><input type="radio" name="payment" value="card" checked />
+            <span><strong>Credit / Debit card</strong><small>Visa, Mastercard, American Express, Discover</small></span><em>💳</em></label>
+          <label class="option"><input type="radio" name="payment" value="paypal" />
+            <span><strong>PayPal</strong><small>Pay with your PayPal account</small></span><em>🅿️</em></label>
+          <label class="option"><input type="radio" name="payment" value="upi" />
+            <span><strong>UPI</strong><small>Google Pay, PhonePe, Paytm, BHIM</small></span><em>📱</em></label>
+          <label class="option"><input type="radio" name="payment" value="cod" />
+            <span><strong>Cash on delivery</strong><small>Pay when your order arrives · $2.00 fee</small></span><em>💵</em></label>
+        </div>
+
+        <div class="pay-panel" data-pay="card">
+          <p class="muted small" id="stripe-note" hidden>You’ll be redirected to Stripe’s secure page to enter your card.</p>
+          <div class="fields" id="card-fields">
+            <label class="full">Card number
+              <span class="card-input"><input id="card-number" inputmode="numeric" autocomplete="cc-number" placeholder="1234 1234 1234 1234" maxlength="23" /><b id="card-brand"></b></span>
+            </label>
+            <label class="full">Name on card<input id="card-name" autocomplete="cc-name" /></label>
+            <label>Expiry (MM/YY)<input id="card-exp" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/YY" maxlength="5" /></label>
+            <label>CVC<input id="card-cvc" inputmode="numeric" autocomplete="cc-csc" placeholder="123" maxlength="4" /></label>
+          </div>
+        </div>
+        <div class="pay-panel" data-pay="paypal" hidden>
+          <div class="fields"><label class="full">PayPal email<input id="paypal-email" type="email" placeholder="you@example.com" /></label></div>
+        </div>
+        <div class="pay-panel" data-pay="upi" hidden>
+          <div class="fields"><label class="full">UPI ID<input id="upi-id" placeholder="yourname@okbank" /></label></div>
+        </div>
+        <div class="pay-panel" data-pay="cod" hidden>
+          <p class="muted">Please keep the exact amount ready. Our courier accepts cash and card on delivery.</p>
+        </div>
+      </section>
+
+      <button type="submit" class="btn btn-primary btn-block btn-large" id="place-order">Place order</button>
+      <p class="muted small center" id="demo-note" hidden>Demo mode: no real money is charged. Try card 4242 4242 4242 4242.</p>
+    </form>
+
+    <aside class="panel summary">
+      <h2>Order summary</h2>
+      <div id="summary-items"></div>
+      <div class="promo">
+        <input id="promo" placeholder="Promo code" aria-label="Promo code" />
+        <button type="button" class="btn btn-small" id="apply-promo">Apply</button>
+      </div>
+      <p class="small" id="promo-msg"></p>
+      <div class="totals">
+        <div class="row"><span>Subtotal</span><span id="t-subtotal">—</span></div>
+        <div class="row discount" id="row-discount" hidden><span>Discount <span id="t-code"></span></span><span id="t-discount"></span></div>
+        <div class="row"><span>Shipping</span><span id="t-shipping">—</span></div>
+        <div class="row" id="row-cod" hidden><span>COD fee</span><span id="t-cod"></span></div>
+        <div class="row"><span>Tax (8%)</span><span id="t-tax">—</span></div>
+        <div class="row total"><span>Total</span><span id="t-total">—</span></div>
+      </div>
+    </aside>
+  </main>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/checkout.js"></script>
+</body>
+</html>
